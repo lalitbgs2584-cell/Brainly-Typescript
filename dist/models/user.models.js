@@ -63,7 +63,7 @@ const userSchema = new mongoose_1.Schema({
         type: String,
         trim: true,
     },
-    verificationToken: {
+    accessToken: {
         type: String,
     },
     resetPasswordToken: {

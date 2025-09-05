@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const register_1 = require("../controllers/register");
+const login_middlewares_1 = require("../middlewares/login.middlewares");
 const router = (0, express_1.Router)();
 router.post('/register', register_1.userRegistration);
+router.post('/login', register_1.userLogin);
+router.get('/me', login_middlewares_1.isLoggedIn, register_1.me);
 exports.default = router;

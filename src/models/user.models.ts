@@ -6,12 +6,12 @@ export interface IUser extends Document {
   username: string;
   email: string;
   fullName?: string;
-  verificationToken?: string;
+  accessToken?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   password: string;
   isVerified: boolean;
-  refreshTokens: string[];
+  refreshTokens: string;
 
   isPasswordCorrect(password: string): Promise<boolean>;
 }
@@ -42,7 +42,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       trim: true,
     },
-    verificationToken: {
+    accessToken: {
       type: String,
     },
     resetPasswordToken: {

@@ -1,19 +1,10 @@
-import jwt, { Secret, SignOptions } from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 
 // Generate Access Token
-export const generateAccessToken = (
+export const generateToken = (
   payload: object,
   secret: Secret,
-  options: SignOptions = { expiresIn: "15m" }
-): string => {
-  return jwt.sign(payload, secret, options);
-};
-
-// Generate Refresh Token
-export const generateRefreshToken = (
-  payload: object,
-  secret: Secret,
-  options: SignOptions = { expiresIn: "7d" }
+  options: object
 ): string => {
   return jwt.sign(payload, secret, options);
 };
