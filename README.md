@@ -29,10 +29,4 @@ A **full-stack content management system** built with **Node.js, Express, TypeSc
 - MongoDB (local or Atlas)
 - npm or yarn
 
-### Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/<username>/<repo-name>.git
-cd <repo-name>
