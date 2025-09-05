@@ -1,8 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { config } from "../config";
-// Define an interface for TypeScript (optional but recommended)
+
+// Define an interface for TypeScript
 export interface IUser extends Document {
   username: string;
   email: string;
@@ -11,12 +10,10 @@ export interface IUser extends Document {
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   password: string;
-  isVerified:boolean;
+  isVerified: boolean;
   refreshTokens: string[];
 
   isPasswordCorrect(password: string): Promise<boolean>;
-  generateAccessToken(): string;
-  generateRefreshToken(): string;
 }
 
 const userSchema = new Schema<IUser>(
@@ -38,8 +35,8 @@ const userSchema = new Schema<IUser>(
       trim: true,
     },
     isVerified: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     fullName: {
       type: String,
@@ -72,7 +69,7 @@ const userSchema = new Schema<IUser>(
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   try {
-    this.password = await bcryptjs.hash(this.password, 10);
+    this.password = await bcryptjs.hash(this.password, 10); // 10 = salt rounds
     next();
   } catch (err) {
     next(err as any);
@@ -86,31 +83,6 @@ userSchema.methods.isPasswordCorrect = async function (password: string) {
   } catch (err) {
     return false;
   }
-};
-
-// Generate Access Token
-userSchema.methods.generateAccessToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-      email: this.email,
-      username: this.username,
-      fullName: this.fullName,
-    },
-    config.accessTokenSecret as string,
-    { expiresIn: config.accessTokenExpiry || "15m" }
-  );
-};
-
-// Generate Refresh Token
-userSchema.methods.generateRefreshToken = function () {
-  return jwt.sign(
-    {
-      _id: this._id,
-    },
-    process.env.REFRESH_TOKEN_SECRET as string,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY || "7d" }
-  );
 };
 
 const User = mongoose.model<IUser>("User", userSchema);
