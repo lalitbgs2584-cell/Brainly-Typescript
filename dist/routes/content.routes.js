@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const content_controllers_1 = require("../controllers/content.controllers");
+const login_middlewares_1 = require("../middlewares/login.middlewares");
+const router = (0, express_1.Router)();
+router.post('/add-content', login_middlewares_1.isLoggedIn, content_controllers_1.addContent);
+router.get('/get-content', login_middlewares_1.isLoggedIn, content_controllers_1.getContent);
+router.delete('/delete-content/:id', login_middlewares_1.isLoggedIn, content_controllers_1.deleteContent);
+exports.default = router;

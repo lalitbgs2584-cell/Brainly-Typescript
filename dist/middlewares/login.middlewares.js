@@ -6,23 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.isLoggedIn = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../config");
-const isLoggedIn = async (req, res) => {
+const isLoggedIn = (req, res, next) => {
     try {
         const token = req.cookies["cookieToken"];
-        if (!token) {
-            return res.status(404).json({
-                message: "Token not found"
-            });
-        }
-        console.log(token);
-        const decodeToken = jsonwebtoken_1.default.verify(token, config_1.config.jwtSecret);
-        console.log(decodeToken);
-        res.json({ decodeToken });
+        if (!token)
+            return res.status(401).json({ message: "Token not found" });
+        const decoded = jsonwebtoken_1.default.verify(token, config_1.config.jwtSecret);
+        req.decodedToken = decoded; // ✅ TS knows this property exists
+        next();
     }
-    catch (error) {
-        return res.status(404).json({
-            message: error.message
-        });
+    catch (err) {
+        return res.status(401).json({ message: "Invalid token" });
     }
 };
 exports.isLoggedIn = isLoggedIn;

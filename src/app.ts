@@ -12,5 +12,10 @@ app.get("/",(req,res)=>{
 })
 
 import userRoute from "./routes/user.routes"
+import contentRoute from "./routes/content.routes"
+import shareRoutes from "./routes/share.routes"
 app.use('/api/v1/user',userRoute)
+app.use('/api/v1/content',contentRoute)
+app.use('/api/v1/brain',shareRoutes)
+
 export  {app}

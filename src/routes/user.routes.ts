@@ -1,5 +1,5 @@
 import express,{Router} from "express"
-import { userLogin, userRegistration ,me } from "../controllers/register"
+import { userLogin, userRegistration ,me } from "../controllers/user.controllers"
 import { isLoggedIn } from "../middlewares/login.middlewares"
 const router = Router()
 

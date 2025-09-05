@@ -40,7 +40,8 @@ const linkSchema = new mongoose_1.Schema({
         type: mongoose_1.default.Types.ObjectId,
         ref: "User",
         required: true
-    }
+    },
+    originalUrl: { type: String }
 }, { timestamps: true });
 // Index for faster lookup
 linkSchema.index({ hash: 1 });

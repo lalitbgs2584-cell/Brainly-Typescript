@@ -34,9 +34,14 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+require("./tag.models");
+const contentTypes = ['image', 'video', 'article', 'audio'];
 const contentSchema = new mongoose_1.Schema({
     link: { type: String, required: true },
     title: { type: String, required: true },
+    type: {
+        type: String, enum: contentTypes, required: true
+    },
     tags: [{
             type: mongoose_1.default.Types.ObjectId,
             ref: "Tag"

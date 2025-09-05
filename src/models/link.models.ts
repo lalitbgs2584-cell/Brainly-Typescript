@@ -6,7 +6,8 @@ const linkSchema = new Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
     required: true
-  }
+  },
+  originalUrl: {type: String}
 }, { timestamps: true });
 
 // Index for faster lookup

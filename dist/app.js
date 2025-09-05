@@ -17,4 +17,8 @@ app.get("/", (req, res) => {
     res.send("hello");
 });
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const content_routes_1 = __importDefault(require("./routes/content.routes"));
+const share_routes_1 = __importDefault(require("./routes/share.routes"));
 app.use('/api/v1/user', user_routes_1.default);
+app.use('/api/v1/content', content_routes_1.default);
+app.use('/api/v1/brain', share_routes_1.default);
